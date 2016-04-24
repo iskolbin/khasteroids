@@ -83,7 +83,7 @@ class GameState {
 		}
 	}
 
-	inline function drawPolygon( context: RenderContext, vertices: Array<Float>, dx: Float, dy: Float ) {
+	@:extern inline function drawPolygon( context: RenderContext, vertices: Array<Float>, dx: Float, dy: Float ) {
 		var x1 = vertices[0] + dx;
 		var y1 = vertices[1] + dy;
 		var j = 2;
