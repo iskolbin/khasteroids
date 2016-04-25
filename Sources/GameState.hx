@@ -27,6 +27,8 @@ class GameState {
 			playerShip = e;
 		}
 		entities.push( e );
+
+		return e;
 	}
 
 	public function destroy( e: GameEntity ) {

@@ -122,14 +122,18 @@ class GameEntity {
 
 		if ( firing && cooldown <= 0.0 ) switch( type ) {
 			case PlayerShip: 
-				gameState.create( PlayerBullet, x, y, Const.playerBulletVelocity, angle );
+				var e = gameState.create( PlayerBullet, x, y, Const.playerBulletVelocity, angle );
+				e.vx += vx;
+				e.vy += vy;
 				cooldown = Const.playerCooldown;
 
 			case AlienShip: 
 				var player = gameState.playerShip;
 				if ( player != null ) {
 					var newAngle = Math.atan2( player.x - x, player.y - y );
-					gameState.create( AlienBullet, x, y, Const.alienBulletVelocity, newAngle );
+					var e = gameState.create( AlienBullet, x, y, Const.alienBulletVelocity, newAngle );
+					e.vx += vx;
+					e.vy += vy;
 					cooldown = Const.alienCooldown;
 				}
 
