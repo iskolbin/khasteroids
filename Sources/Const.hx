@@ -10,6 +10,8 @@ class Const {
 	public static var playerBulletVelocity = 150.0;
 	public static var playerBulletLifeSpan = 5.0;
 	public static var playerCooldown = 0.2;
+	public static var playerRespawnTime = 2.0;
+	public static var playerInvunerabilityTime = 2.0;
 	public static var bigAsteroidVelocity = 10.0;
 	public static var bigAsteroidPieces = 2;
 	public static var mediumAsteroidVelocity = 20.0;
