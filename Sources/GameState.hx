@@ -24,6 +24,7 @@ class GameState {
 		this.entities = [];
 		this.deleteList = [];
 		this.debug = true;
+		this.score = 0;
 		updateBounds( Const.sceneHalfWidth, Const.sceneHalfHeight );
 	}
 
@@ -144,27 +145,6 @@ class GameState {
 
 	}
 
-	@:extern inline function drawPolygon( context: RenderContext, vertices: Array<Float>, dx: Float, dy: Float ) {
-		var x1 = vertices[0] + dx;
-		var y1 = vertices[1] + dy;
-		var j = 2;
-		while ( j < vertices.length ) {
-			var x2 = vertices[j] + dx;
-			var y2 = vertices[j+1] + dy;
-			j += 2;
-			context.drawLine( x1, y1, x2, y2 );
-			x1 = x2;
-			y1 = y2;
-		}
-	}
-
-	@:extern inline function drawRectangle( context: RenderContext, aabbLeft: Float, aabbTop: Float, aabbRight: Float, aabbBottom: Float ) {
-		context.drawLine( aabbLeft, aabbTop, aabbRight, aabbTop );
-		context.drawLine( aabbRight, aabbTop, aabbRight, aabbBottom );
-		context.drawLine( aabbRight, aabbBottom, aabbLeft, aabbBottom );
-		context.drawLine( aabbLeft, aabbBottom, aabbLeft, aabbTop );
-	}
-
 	public function render( context: RenderContext ) {
 		var hw = Const.sceneHalfWidth;
 	 	var hh = Const.sceneHalfHeight;	
@@ -172,17 +152,28 @@ class GameState {
 			case Playing: 
 				for ( e in entities ) {
 					for ( v in e.transformedVertices ) {
-						drawPolygon( context, v, hw, hh );
+						RenderUtils.drawPolygon( context, v, hw, hh );
 					}
 				}
+			
+				RenderUtils.drawText( context, 'SCORE ${score}', 16, 16, 8, 16, RenderUtils.LEFT );
+				RenderUtils.drawText( context, 'ENEMIES ${goalEnemiesCount}', hw+hw-16, 16, 8, 16, RenderUtils.RIGHT );
+
 				if ( debug ) {
 					context.color = 0xffff0000;
 					for ( e in entities ) {
-						drawRectangle( context, e.aabbLeft+hw, e.aabbTop+hh, e.aabbRight+hw, e.aabbBottom+hh );
+						RenderUtils.drawRectangle( context, e.aabbLeft+hw, e.aabbTop+hh, e.aabbRight+hw, e.aabbBottom+hh );
 					}
 					context.color = 0xffffffff;
 				}
-			case _:
+			
+			case GameOver:
+				RenderUtils.drawText( context, 'GAME OVER', hw, hh - 16, 8, 16 ); 
+				RenderUtils.drawText( context, 'FINAL SCORE ${score}', hw, hh + 16, 8, 16 ); 			
+
+			case Paused:
+				RenderUtils.drawText( context, 'PAUSED', hw, hh - 16, 8, 16 );
+				RenderUtils.drawText( context, 'PRESS ANY KEY', hw, hh + 16, 8, 16 );
 		}
 	}
 
