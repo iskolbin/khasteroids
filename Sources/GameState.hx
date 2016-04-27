@@ -164,6 +164,7 @@ class GameState {
 			
 				RenderUtils.drawText( context, 'SCORE ${score}', 16, 16, 8, 16, RenderUtils.LEFT );
 				RenderUtils.drawText( context, 'ENEMIES ${goalEnemiesCount}', hw+hw-16, 16, 8, 16, RenderUtils.RIGHT );
+				RenderUtils.drawText( context, 'LIVES ${lives}', hw, 16, 8, 16 );
 
 				if ( debug ) {
 					context.color = 0xffff0000;
