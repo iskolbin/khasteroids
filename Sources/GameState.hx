@@ -59,6 +59,9 @@ class GameState {
 			if ( goalEnemiesCount <= 0 ) {
 				level++;
 				type = NewLevel;
+				if ( playerShip != null ) {
+					playerShip.ghost += Const.playerInvunerabilityTime;
+				}
 				initLevel( level );
 			}
 		}
@@ -76,6 +79,7 @@ class GameState {
 			case 0: createAsteroids( 4 );
 			case 1: createAsteroids( 6 );
 			case 2: createAsteroids( 8 );
+			case _: createAsteroids( 10 );
 		}
 	}
 
