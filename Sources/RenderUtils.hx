@@ -50,7 +50,7 @@ class RenderUtils {
 		return str.length * (width+dx) - dx;
 	}
 
-	public static inline function drawText( context: RenderContext, str: String, x: Float, y: Float, width: Float, height: Float, align: Int = CENTER, ?dx_: Float ) {
+	public static inline function drawText( context: RenderContext, str: String, x: Float, y: Float, width: Float, height: Float, align: Int = CENTER, stroke: Float = 2, ?dx_: Float ) {
 		var dx = (dx_ == null) ? Math.fceil( width/3 ) : dx_; 
 		var len = textLength( str, width, height, dx );
 		var offset = switch ( align ) {
@@ -69,7 +69,7 @@ class RenderUtils {
 				while ( j < vertices.length ) {
 					var x1 = offset + width*vertices[j];
 					var y1 = y + height*vertices[j+1];
-					context.drawLine( x0, y0, x1, y1, 2 );
+					context.drawLine( x0, y0, x1, y1, stroke );
 					x0 = x1;
 					y0 = y1;
 					j += 2;
