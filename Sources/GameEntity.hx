@@ -192,14 +192,13 @@ class GameEntity {
 		for ( v in this.vertices ) {
 			this.transformedVertices.push( v.copy());
 		}
-		
-		setAngle( angle );
+	
+		updateTransform();	
 		
 		this.firing = false;
 		this.rotatingCW = false;
 		this.rotatingCCW = false;
 		this.throttling = false;
-		this.angle = angle;	
 		this.ghost = 0.0;
 		this.cooldown = 0.0;
 		this.lifespan = switch( type ) {
@@ -274,14 +273,6 @@ class GameEntity {
 				}
 
 			case _:
-		}
-	}
-
-	public function split2( newType: GameEntityType, number: Int, velocity: Float ) {
-		gameState.destroy( this );
-		for ( i in 0...number ) {
-			var newAngle = 2 * Const.PI * Math.random();
-			gameState.create( newType, x, y, velocity, newAngle );
 		}
 	}
 
