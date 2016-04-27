@@ -56,7 +56,7 @@ class RenderUtils {
 		var offset = switch ( align ) {
 			case CENTER: x - 0.5 * len; 
 			case LEFT: x;
-			case RIGHT: x + 0.5*len;
+			case RIGHT: x - len;
 			case _: 0;
 		}
 		

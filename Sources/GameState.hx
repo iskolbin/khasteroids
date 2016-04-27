@@ -25,6 +25,7 @@ class GameState {
 		this.deleteList = [];
 		this.debug = true;
 		this.score = 0;
+		this.goalEnemiesCount = 0;
 		updateBounds( Const.sceneHalfWidth, Const.sceneHalfHeight );
 	}
 
@@ -48,15 +49,16 @@ class GameState {
 					lives--; 
 					playerShip = null;
 					checkLives();
-				case AlienShip: score += 300;
-				case BigAsteroid: score += 100;
-				case MediumAsteroid: score += 200;
-				case SmallAsteroid: score += 200;
+				case AlienShip: score += 300; goalEnemiesCount--;
+				case BigAsteroid: score += 100; goalEnemiesCount--;
+				case MediumAsteroid: score += 200; goalEnemiesCount--;
+				case SmallAsteroid: score += 200; goalEnemiesCount--;
 				case _:
 			}
 
 			if ( goalEnemiesCount <= 0 ) {
 				level++;
+				type = NewLevel;
 				initLevel( level );
 			}
 		}
@@ -170,6 +172,9 @@ class GameState {
 			case GameOver:
 				RenderUtils.drawText( context, 'GAME OVER', hw, hh - 16, 8, 16 ); 
 				RenderUtils.drawText( context, 'FINAL SCORE ${score}', hw, hh + 16, 8, 16 ); 			
+			
+			case NewLevel:
+				RenderUtils.drawText( context, 'LEVEL ${level+1}', hw, hh, 8, 16 ); 
 
 			case Paused:
 				RenderUtils.drawText( context, 'PAUSED', hw, hh - 16, 8, 16 );
@@ -194,7 +199,7 @@ class GameState {
 					var e = create( PlayerShip, 0, 0, 0, Const.PI/2 ); 
 					e.ghost = Const.playerInvunerabilityTime;
 					initLevel( 0 );
-					type = Playing;
+					type = NewLevel;
 				case _:
 			}
 	
@@ -212,7 +217,7 @@ class GameState {
 				case StartGame:
 			}
 
-			case Paused: switch( event ) {
+			case Paused | NewLevel: switch( event ) {
 				case StartGame:
 					type = Playing;
 				case _:
